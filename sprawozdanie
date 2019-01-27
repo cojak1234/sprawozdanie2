@@ -1,0 +1,29 @@
+#include <ros.h>
+#include <std_msgs/String.h>
+#include <std_msgs/Int16.h>
+
+ros::NodeHandle uchwyt;
+//std_msgs::String wiadomosc_string;
+std_msgs::Int16 wiadomosc_int;
+ros::Publisher chatter("chatter",&wiadomosc_int);
+
+int a = 15;
+//char wiadomoscTab[13] = "hello world!";
+
+void setup() {
+  uchwyt.initNode();
+  uchwyt.advertise(chatter);
+
+}
+
+int val = 0;
+
+void loop() {
+  val = analogRead(pot);
+  wiadomosc_int.data = val;
+  //wiadomosc_string.data = wiadomoscTab;
+  chatter.publish(&wiadomosc_int);
+  uchwyt.spinOnce();
+  delay(10);
+
+}
